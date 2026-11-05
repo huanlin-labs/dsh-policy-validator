@@ -60,6 +60,14 @@ npm run demo
 
 会依次跑：合法配置（exit 0）→ 含错配置（exit 1）→ 准入矩阵 → 策略版本对比 → 目录统计。作品的一页式说明见 [`docs/PORTFOLIO.md`](docs/PORTFOLIO.md)。
 
+### 作为 DSH Skill 安装
+
+```bash
+git clone https://github.com/huanlin-labs/dsh-policy-validator.git ~/.dsh/skills/dsh-policy-validator
+```
+
+之后在 DSH 里让 Agent 用 `dsh-policy-validator` 技能校验 `dsh-superagent` 的 `settings.json` / `deployment.json`。技能说明见 [`SKILL.md`](SKILL.md)。
+
 ## 命令
 
 | 命令 | 作用 | 参数 |
@@ -169,6 +177,7 @@ src/
   checks/structure.js   DEP/POL/SRC/EVAL/EXE/X
   index.js              对外 API（validate）
   cli.js                CLI
+SKILL.md                DSH Skill 入口
 fixtures/cases/          47 个用例
 test/                   85 个测试
 docs/                   UPSTREAM / RULES / ARCHITECTURE / PRIOR-ART
