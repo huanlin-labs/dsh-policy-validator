@@ -10,6 +10,7 @@
   },
   "scripts": {
     "test": "node --test",
+    "demo": "node scripts/demo.mjs",
     "check:fixtures": "node scripts/check-fixtures.mjs",
     "gen:fixtures": "node scripts/gen-fixtures.mjs"
   },

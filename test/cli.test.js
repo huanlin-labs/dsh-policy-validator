@@ -84,3 +84,13 @@ test('unknown option exits 2', () => {
   assert.equal(result.status, 2)
   assert.match(result.stderr, /unknown|error/i)
 })
+
+test('demo runs all sections and exits 0', () => {
+  const result = spawnSync(process.execPath, ['scripts/demo.mjs'], { cwd: project, encoding: 'utf8' })
+  assert.equal(result.status, 0, result.stderr)
+  assert.match(result.stdout, /valid config/)
+  assert.match(result.stdout, /invalid config/)
+  assert.match(result.stdout, /admission matrix/)
+  assert.match(result.stdout, /version compare/)
+  assert.match(result.stdout, /demo complete/)
+})

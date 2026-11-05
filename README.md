@@ -2,7 +2,7 @@
 
 > 把 `settings.json` 粘进面板之前，离线看清：**这份 Policy 会让谁获得授权、哪些规则会静默失效、策略版本一变哪些 Mandate 会失守。**
 
-作者：吴昭睿 · 2026-11-05 · v0.1.0 · Node ≥ 20 · 83 tests passing
+作者：吴昭睿 · 2026-11-05 · v0.1.0 · Node ≥ 20 · 85 tests passing
 
 **English abstract.** An offline, zero-dependency linter for `dsh-superagent` policies. Upstream zod already rejects malformed settings at save time; this tool targets the semantic failures it cannot see — `mode=off` making rules inert, an `explicit` admission cell disabling the allow-list, an admission cell the Source row never offers, and a policy-version change that invalidates live Mandates. It also projects the admission matrix and reproduces the upstream policy hash.
 
@@ -51,6 +51,14 @@ node src/cli.js matrix --settings examples/valid/settings.json
 ```
 
 第 3 条会列出 GitHub 的 `issues / pulls / comments / ci` 四行、`<default>` 行，以及每格是配置值还是默认值；`x` 表示该行不提供这一格。
+
+### 一分钟演示
+
+```bash
+npm run demo
+```
+
+会依次跑：合法配置（exit 0）→ 含错配置（exit 1）→ 准入矩阵 → 策略版本对比 → 目录统计。作品的一页式说明见 [`docs/PORTFOLIO.md`](docs/PORTFOLIO.md)。
 
 ## 命令
 
@@ -142,7 +150,7 @@ key(POLICY_REVISION, JSON.stringify({ rules, mode, sources }))
 - `fixtures/cases/`：47 个用例，每个含 `settings.json`、`deployment.json`、`expected.json`。
 - `expected.json` 记录退出码、码集合，以及 **每条诊断的 code/severity/path 快照**；测试逐条 `deepEqual`，不是只比码集合。
 - 覆盖：每个 catalog 码至少被一个用例触发；`test/fixtures.test.js` 强制检查。
-- `node --test`：83 个测试（规则单测、47 个 fixture 快照、API 冒烟、CLI 端到端）。
+- `node --test`：85 个测试（规则单测、47 个 fixture 快照、API 冒烟、Node 20 兼容守卫、CLI 端到端与 demo）。
 - `node scripts/check-fixtures.mjs`：单独核对全部 fixtures。
 - `node scripts/gen-fixtures.mjs`：重建 fixtures（改规则后先跑这个，再核对 `expected.json` 的意图）。
 - `node scripts/gen-docs.mjs`：从 `src/catalog.js` 重建 `docs/UPSTREAM.md` 与 `docs/RULES.md`。
@@ -162,7 +170,7 @@ src/
   index.js              对外 API（validate）
   cli.js                CLI
 fixtures/cases/          47 个用例
-test/                   83 个测试
+test/                   85 个测试
 docs/                   UPSTREAM / RULES / ARCHITECTURE / PRIOR-ART
 scripts/                生成与核对脚本
 ```

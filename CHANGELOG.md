@@ -8,5 +8,6 @@
 - Admission matrix projected from the Source kind: GitHub `issues/pulls/comments/ci`;
   Feishu configured chats plus `other` and `direct`.
 - `version --compare` reports policy-version changes and Mandate impact.
-- 47 fixtures covering every catalog code; 83 `node:test` tests.
+- 47 fixtures covering every catalog code; 85 `node:test` tests.
+- `npm run demo` runs the four scenarios end to end.
 - Zero runtime dependencies; Node ≥ 20.
