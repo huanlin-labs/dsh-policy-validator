@@ -4,8 +4,8 @@
   "revision": "mandate-v3",
   "policyVersion": "ccf79f018217763a800b299523b8acbb",
   "inputs": {
-    "settings": "D:\\工作区\\实习\\产出\\作品-policy-validator\\examples\\invalid\\settings.json",
-    "deployment": "D:\\工作区\\实习\\产出\\作品-policy-validator\\examples\\invalid\\deployment.json"
+    "settings": "examples/invalid/settings.json",
+    "deployment": "examples/invalid/deployment.json"
   },
   "expectation": null,
   "ok": false,

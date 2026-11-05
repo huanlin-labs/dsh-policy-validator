@@ -5,7 +5,7 @@
 - 角色：独立完成（调研、设计、实现、测试、文档）
 - 时间：2026-11-05，约 8 小时时间盒
 - 形态：零依赖 Node CLI，离线运行，不启动服务
-- 代码：`D:\工作区\实习\产出\作品-policy-validator\`
+- 代码：本仓库
 
 ## 问题
 
@@ -38,7 +38,7 @@ CLI 四个命令：`check`、`matrix`、`version`（含 `--compare`）、`rules`
 ## 可复现
 
 ```bash
-cd D:\工作区\实习\产出\作品-policy-validator
+cd dsh-policy-validator
 npm test
 node scripts/check-fixtures.mjs
 npm run demo
