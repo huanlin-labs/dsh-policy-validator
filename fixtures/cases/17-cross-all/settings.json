@@ -1,0 +1,26 @@
+{
+  "paused": "no",
+  "policy": {
+    "rules": [],
+    "sources": {}
+  },
+  "eval": {
+    "mode": "observe",
+    "timeoutSeconds": 120,
+    "model": null
+  },
+  "executor": {
+    "model": null,
+    "maxWorkers": 3,
+    "directory": "",
+    "prepare": "",
+    "blockedCommands": []
+  },
+  "sources": {
+    "github": {
+      "enabled": "yes",
+      "config": 1
+    }
+  },
+  "nope": 1
+}

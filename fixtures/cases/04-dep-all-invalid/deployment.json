@@ -1,0 +1,15 @@
+{
+  "stateDir": "C:/dsh",
+  "promptMaxChars": 10,
+  "admissionContextMaxPages": 0,
+  "admissionContextTimeoutMs": 99999,
+  "worktreeRoot": "old",
+  "github": {
+    "repository": "bad",
+    "cli": "",
+    "branchPrefix": "x"
+  },
+  "feishu": {
+    "clii": "x"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "paused": false,
+  "policy": {
+    "rules": [
+      {
+        "id": "copy",
+        "name": "Copy fixes",
+        "enabled": true,
+        "instruction": "Explicit requests to correct a typo, wording or punctuation in an existing page. Preserve product promises and business meaning."
+      },
+      {
+        "id": "visual",
+        "name": "Visual fixes",
+        "enabled": true,
+        "instruction": "Explicit implementation requests for local spacing, alignment or overflow with a specified target. Do not redesign or invent interaction."
+      }
+    ],
+    "sources": {
+      "github": {
+        "allowed": [{ "id": "alice", "name": "Alice" }],
+        "admission": {
+          "issue": { "listedUnaddressed": "inferred" },
+          "pull_request": { "listedUnaddressed": "inferred" }
+        },
+        "bots": [{ "id": "dependabot[bot]", "name": "Dependabot" }]
+      }
+    }
+  },
+  "eval": { "mode": "observe", "timeoutSeconds": 120, "model": null },
+  "executor": {
+    "model": null,
+    "maxWorkers": 3,
+    "directory": "",
+    "prepare": "pnpm install --frozen-lockfile",
+    "blockedCommands": ["npm"]
+  },
+  "sources": {
+    "github": { "enabled": true, "config": {} }
+  }
+}

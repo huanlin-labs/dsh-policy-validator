@@ -1,0 +1,17 @@
+{
+  "paused": false,
+  "policy": {
+    "sources": {}
+  },
+  "eval": {
+    "mode": "observe"
+  },
+  "executor": {
+    "model": null,
+    "maxWorkers": 3,
+    "directory": "",
+    "prepare": "",
+    "blockedCommands": []
+  },
+  "sources": {}
+}

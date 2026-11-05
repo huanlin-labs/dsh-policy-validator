@@ -1,0 +1,33 @@
+{
+  "paused": false,
+  "policy": {
+    "rules": [],
+    "sources": {
+      "feishu": {
+        "allowed": [
+          {
+            "id": "ou_a"
+          }
+        ]
+      }
+    }
+  },
+  "eval": {
+    "mode": "observe",
+    "timeoutSeconds": 120,
+    "model": null
+  },
+  "executor": {
+    "model": null,
+    "maxWorkers": 3,
+    "directory": "",
+    "prepare": "",
+    "blockedCommands": []
+  },
+  "sources": {
+    "feishu": {
+      "enabled": true,
+      "config": {}
+    }
+  }
+}

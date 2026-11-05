@@ -1,0 +1,40 @@
+{
+  "paused": false,
+  "policy": {
+    "rules": [
+      {
+        "id": "bad id",
+        "name": "",
+        "enabled": "yes",
+        "instruction": "",
+        "extra": 1
+      },
+      {
+        "id": "dup",
+        "name": "Dup",
+        "enabled": true,
+        "instruction": "x"
+      },
+      {
+        "id": "dup",
+        "name": "Dup2",
+        "enabled": true,
+        "instruction": "y"
+      }
+    ],
+    "sources": {}
+  },
+  "eval": {
+    "mode": "observe",
+    "timeoutSeconds": 120,
+    "model": null
+  },
+  "executor": {
+    "model": null,
+    "maxWorkers": 3,
+    "directory": "",
+    "prepare": "",
+    "blockedCommands": []
+  },
+  "sources": {}
+}

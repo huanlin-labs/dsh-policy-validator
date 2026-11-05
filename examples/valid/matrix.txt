@@ -1,0 +1,6 @@
+source: github
+  row                     listed/unaddressed    unlisted/addressed    unlisted/unaddressed
+  issue                   inferred (config)     ignore (default)      ignore (default)
+  pull_request            inferred (config)     ignore (default)      ignore (default)
+
+A listed sender who addresses the agent is always explicit and does not read an admission cell (src/policy.ts:197).

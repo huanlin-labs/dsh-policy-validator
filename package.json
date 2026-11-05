@@ -1,0 +1,30 @@
+{
+  "name": "dsh-superagent-policy-validator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Offline, zero-dependency pre-flight for a dsh-superagent Policy and its deployment config.",
+  "type": "module",
+  "bin": {
+    "policy-validator": "./src/cli.js"
+  },
+  "scripts": {
+    "test": "node --test",
+    "check:fixtures": "node scripts/check-fixtures.mjs",
+    "gen:fixtures": "node scripts/gen-fixtures.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "src",
+    "docs",
+    "README.md"
+  ],
+  "keywords": [
+    "dsh-superagent",
+    "policy",
+    "validator",
+    "offline"
+  ],
+  "license": "MIT"
+}

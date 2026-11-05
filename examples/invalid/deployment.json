@@ -1,0 +1,10 @@
+{
+  "stateDir": "/srv/dsh-superagent",
+  "promptMaxChars": 100000,
+  "admissionContextMaxPages": 10,
+  "admissionContextTimeoutMs": 15000,
+  "github": {
+    "repository": "deepseek-ai/dsh-superagent-prototype",
+    "cli": "gh"
+  }
+}

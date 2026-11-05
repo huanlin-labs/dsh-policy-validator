@@ -1,0 +1,19 @@
+{
+  "tool": "dsh-superagent-policy-validator",
+  "schemaVersion": 1,
+  "revision": "mandate-v3",
+  "policyVersion": "1672a12ddde7fddb9461fd2fb9dcd9a4",
+  "inputs": {
+    "settings": "examples/valid/settings.json",
+    "deployment": "examples/valid/deployment.json"
+  },
+  "ok": true,
+  "summary": {
+    "error": 0,
+    "warning": 0,
+    "info": 0
+  },
+  "strict": false,
+  "maxWarnings": null,
+  "diagnostics": []
+}
