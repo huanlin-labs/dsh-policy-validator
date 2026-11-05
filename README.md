@@ -66,7 +66,7 @@ npm run demo
 git clone https://github.com/huanlin-labs/dsh-policy-validator.git ~/.dsh/skills/dsh-policy-validator
 ```
 
-之后在 DSH 里让 Agent 用 `dsh-policy-validator` 技能校验 `dsh-superagent` 的 `settings.json` / `deployment.json`。技能说明见 [`SKILL.md`](SKILL.md)。
+之后在 DSH 里让 Agent 用 `dsh-policy-validator` 技能校验 `dsh-superagent` 的 `settings.json` / `deployment.json`。技能说明见 [`SKILL.md`](SKILL.md)，完整操作指南见 [`docs/GUIDE.md`](docs/GUIDE.md)。
 
 ## 命令
 
