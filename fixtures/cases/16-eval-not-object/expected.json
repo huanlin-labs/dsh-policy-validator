@@ -1,0 +1,13 @@
+{
+  "exitCode": 1,
+  "codes": [
+    "EVAL000"
+  ],
+  "diagnostics": [
+    {
+      "code": "EVAL000",
+      "severity": "error",
+      "path": "eval"
+    }
+  ]
+}

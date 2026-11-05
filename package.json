@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "description": "Offline, zero-dependency pre-flight for a dsh-superagent Policy and its deployment config.",
+  "author": "吴昭睿",
   "type": "module",
   "bin": {
     "policy-validator": "./src/cli.js"
@@ -18,7 +19,10 @@
   "files": [
     "src",
     "docs",
-    "README.md"
+    "README.md",
+    "LICENSE",
+    "NOTICE",
+    "CHANGELOG.md"
   ],
   "keywords": [
     "dsh-superagent",

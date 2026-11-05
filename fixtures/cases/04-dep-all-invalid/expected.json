@@ -5,10 +5,38 @@
     "DEP002",
     "DEP003",
     "DEP004",
-    "DEP005",
-    "DEP006",
-    "DEP007",
-    "DEP008",
-    "DEP009"
+    "DEP005"
+  ],
+  "diagnostics": [
+    {
+      "code": "DEP004",
+      "severity": "error",
+      "path": "admissionContextMaxPages"
+    },
+    {
+      "code": "DEP005",
+      "severity": "error",
+      "path": "admissionContextTimeoutMs"
+    },
+    {
+      "code": "DEP002",
+      "severity": "error",
+      "path": "deployment.github"
+    },
+    {
+      "code": "DEP002",
+      "severity": "error",
+      "path": "deployment.worktreeRoot"
+    },
+    {
+      "code": "DEP003",
+      "severity": "error",
+      "path": "promptMaxChars"
+    },
+    {
+      "code": "DEP001",
+      "severity": "error",
+      "path": "stateDir"
+    }
   ]
 }

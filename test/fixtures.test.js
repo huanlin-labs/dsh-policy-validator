@@ -25,6 +25,8 @@ for (const name of names) {
     const actual = [...new Set(report.diagnostics.map(item => item.code))].sort()
     const wanted = [...new Set(expected.codes)].sort()
     assert.deepEqual(actual, wanted, `diagnostic codes differ for ${name}`)
+    const snapshot = report.diagnostics.map(({ code, severity, path }) => ({ code, severity, path }))
+    assert.deepEqual(snapshot, expected.diagnostics, `diagnostic snapshot differs for ${name}`)
     assert.equal(report.ok, expected.exitCode === 0, `exit expectation differs for ${name}`)
   })
 }

@@ -1,0 +1,13 @@
+{
+  "exitCode": 1,
+  "codes": [
+    "X004"
+  ],
+  "diagnostics": [
+    {
+      "code": "X004",
+      "severity": "error",
+      "path": "sources.github"
+    }
+  ]
+}

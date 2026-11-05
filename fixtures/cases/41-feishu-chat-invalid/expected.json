@@ -1,0 +1,23 @@
+{
+  "exitCode": 1,
+  "codes": [
+    "DEP011"
+  ],
+  "diagnostics": [
+    {
+      "code": "DEP011",
+      "severity": "error",
+      "path": "sources.feishu.config.chats[0].chatId"
+    },
+    {
+      "code": "DEP011",
+      "severity": "error",
+      "path": "sources.feishu.config.chats[0].listen"
+    },
+    {
+      "code": "DEP011",
+      "severity": "error",
+      "path": "sources.feishu.config.chats[2].chatId"
+    }
+  ]
+}

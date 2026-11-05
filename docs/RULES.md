@@ -1,8 +1,8 @@
 # 规则目录
 
-共 56 条。`rules` 命令输出同一份目录；`docs/UPSTREAM.md` 给出每条的上游依据。
+共 62 条。`rules` 命令输出同一份目录；`docs/UPSTREAM.md` 给出每条的上游依据。
 
-## 部署配置（DEP）（10）
+## 部署配置（DEP）（12）
 
 | 码 | 级别 | 检查内容 |
 |---|---|---|
@@ -12,12 +12,14 @@
 | `DEP003` | error | promptMaxChars outside 1000..1000000 |
 | `DEP004` | error | admissionContextMaxPages outside 1..100 |
 | `DEP005` | error | admissionContextTimeoutMs outside 1..90000 |
-| `DEP006` | error | github.repository empty or not owner/name |
-| `DEP007` | error | github.cli empty |
-| `DEP008` | error | Unknown github key |
-| `DEP009` | error | feishu shape invalid |
+| `DEP006` | error | sources.github.config.repository empty or not owner/name |
+| `DEP007` | error | sources.github.config.cli empty |
+| `DEP008` | error | Unknown sources.github.config key |
+| `DEP009` | error | sources.feishu.config shape invalid |
+| `DEP010` | error | github poll/observe option invalid |
+| `DEP011` | error | feishu option or chat row invalid |
 
-## 策略规则（POL）（8）
+## 策略规则（POL）（9）
 
 | 码 | 级别 | 检查内容 |
 |---|---|---|
@@ -29,8 +31,9 @@
 | `POL005` | error | Rule name empty or longer than 100 characters |
 | `POL006` | error | Rule instruction empty or longer than 2000 characters |
 | `POL007` | error | rule.enabled is not boolean |
+| `POL008` | error | Unknown policy key |
 
-## 来源与准入（SRC）（9）
+## 来源与准入（SRC）（10）
 
 | 码 | 级别 | 检查内容 |
 |---|---|---|
@@ -42,7 +45,8 @@
 | `SRC005` | error | Admission cell value not allowed |
 | `SRC006` | error | Unknown admission cell name |
 | `SRC007` | error | bots array or bot entry invalid |
-| `SRC008` | info | Unknown Source Policy key (kept by catchall) |
+| `SRC008` | info | Unknown Source Policy key (kept by catchall, never read) |
+| `SRC009` | warning | Duplicate bot entry |
 
 ## 求值（EVAL）（5）
 
@@ -67,7 +71,7 @@
 | `EXE006` | error | executor.model shape invalid |
 | `EXE007` | error | Unknown executor key |
 
-## 交叉项（X）（6）
+## 交叉项（X）（7）
 
 | 码 | 级别 | 检查内容 |
 |---|---|---|
@@ -75,20 +79,22 @@
 | `X001` | error | Unknown top-level settings key |
 | `X002` | error | paused is not boolean |
 | `X003` | error | Source instance shape invalid |
-| `X004` | warning | GitHub Policy without a deployment repository |
-| `X005` | warning | Feishu Policy without feishu.cli |
+| `X004` | error | No GitHub Source instance: setup cannot resolve repository/cli |
+| `X005` | warning | Feishu Policy without a usable feishu config.cli |
+| `X006` | info | Unknown Source kind; config not checked |
 
-## 语义（SEM）（10）
+## 语义（SEM）（11）
 
 | 码 | 级别 | 检查内容 |
 |---|---|---|
 | `SEM001` | warning | accept mode off makes every enabled rule inert |
 | `SEM002` | warning | auto mode with no enabled rule behaves like observe |
 | `SEM003` | warning | unlisted sender can make an explicit request |
-| `SEM004` | warning | Unaddressed admission cell on a mentions-only scope |
+| `SEM004` | warning | Configured admission cell is never offered by that row |
 | `SEM005` | error | blockedCommands contains a worker command |
 | `SEM006` | warning | Service is paused |
-| `SEM007` | warning | Policy Source has no instance or is disabled |
+| `SEM007` | warning | Policy targets an unknown kind or a disabled instance |
 | `SEM008` | info | Admission rows without an allowed sender |
 | `SEM009` | warning | Duplicate rule name |
 | `SEM010` | warning | Every rule is disabled |
+| `SEM011` | warning | Admission row is never produced by that Source |

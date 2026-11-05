@@ -2,11 +2,12 @@
   "tool": "dsh-superagent-policy-validator",
   "schemaVersion": 1,
   "revision": "mandate-v3",
-  "policyVersion": "825b89fd459ab561a282ce2b5df97175",
+  "policyVersion": "ccf79f018217763a800b299523b8acbb",
   "inputs": {
-    "settings": "examples/invalid/settings.json",
-    "deployment": "examples/invalid/deployment.json"
+    "settings": "D:\\工作区\\实习\\产出\\作品-policy-validator\\examples\\invalid\\settings.json",
+    "deployment": "D:\\工作区\\实习\\产出\\作品-policy-validator\\examples\\invalid\\deployment.json"
   },
+  "expectation": null,
   "ok": false,
   "summary": {
     "error": 1,
@@ -23,7 +24,7 @@
       "message": "\"gh\" is a worker command and cannot be blocked",
       "consequence": "The executor needs this command to run a Ticket; upstream rejects the whole configuration instead of silently ignoring it.",
       "hint": "Remove \"gh\" from blockedCommands.",
-      "source": "src/policy.ts:88-89; src/infra/environment.ts:18"
+      "source": "upstream:src/policy.ts:88-89; upstream:src/infra/environment.ts:18"
     },
     {
       "code": "SEM001",
@@ -32,7 +33,7 @@
       "message": "accept mode is \"off\" but 1 rule(s) are enabled",
       "consequence": "Inferred candidates are never created in off mode, so proactive rules cannot accept anything; only explicit requests start work.",
       "hint": "Use \"observe\" while reviewing Decisions, or set mode to \"auto\" once the rules are trusted.",
-      "source": "docs/002-authorization.md:91-99; src/policy.ts:55-58,184"
+      "source": "upstream:docs/002-authorization.md:91-99; upstream:src/policy.ts:55-58,184"
     },
     {
       "code": "SEM006",
@@ -41,16 +42,16 @@
       "message": "the service is paused",
       "consequence": "No new work starts while paused; the rest of the Policy is inert until someone resumes it.",
       "hint": "Check this is intentional before comparing two Policy versions or handing the file to someone else.",
-      "source": "src/policy.ts:190"
+      "source": "upstream:src/policy.ts:190"
     },
     {
       "code": "SEM003",
       "severity": "warning",
-      "path": "policy.sources.github.admission.issue.unlistedAddressed",
+      "path": "policy.sources.github.admission.issues.unlistedAddressed",
       "message": "anyone in this scope can make an explicit request by mentioning the agent",
       "consequence": "The allowed list stops protecting this scope: an unlisted sender becomes an explicit request, works in every accept mode, and can start a Ticket.",
       "hint": "Keep \"explicit\" only for a dedicated support chat you actually want open to everyone; otherwise use \"inferred\" or \"ignore\".",
-      "source": "docs/002-authorization.md:56-73"
+      "source": "upstream:docs/002-authorization.md:56-73"
     }
   ]
 }

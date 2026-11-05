@@ -6,13 +6,13 @@
         "id": "copy",
         "name": "Copy fixes",
         "enabled": true,
-        "instruction": "Fix typos and punctuation without changing meaning."
+        "instruction": "Do the thing."
       },
       {
         "id": "visual",
         "name": "Visual fixes",
         "enabled": true,
-        "instruction": "Fix local spacing or alignment with a specified target."
+        "instruction": "Do the thing."
       }
     ],
     "sources": {
@@ -24,10 +24,10 @@
           }
         ],
         "admission": {
-          "issue": {
+          "issues": {
             "listedUnaddressed": "inferred"
           },
-          "pull_request": {
+          "pulls": {
             "listedUnaddressed": "inferred"
           }
         },
@@ -58,7 +58,10 @@
     "github": {
       "enabled": true,
       "config": {
-        "receiveAll": true
+        "repository": "deepseek-ai/dsh-superagent-prototype",
+        "cli": "gh",
+        "observeIssues": true,
+        "observePulls": true
       }
     }
   }

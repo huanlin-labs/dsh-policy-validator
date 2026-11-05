@@ -11,31 +11,23 @@
     ],
     "sources": {
       "github": {
-        "allowed": [
-          {
-            "id": "alice"
-          }
-        ],
+        "allowed": [{ "id": "alice" }],
         "admission": {
-          "issue": {
-            "unlistedAddressed": "explicit"
-          }
+          "issues": { "unlistedAddressed": "explicit" }
         }
       }
     }
   },
-  "eval": {
-    "mode": "off"
-  },
-  "executor": {
-    "blockedCommands": [
-      "gh"
-    ]
-  },
+  "eval": { "mode": "off" },
+  "executor": { "blockedCommands": ["gh"] },
   "sources": {
     "github": {
       "enabled": true,
-      "config": {}
+      "config": {
+        "repository": "deepseek-ai/dsh-superagent-prototype",
+        "cli": "gh",
+        "observeIssues": true
+      }
     }
   }
 }

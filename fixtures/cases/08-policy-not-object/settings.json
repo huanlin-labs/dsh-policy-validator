@@ -13,5 +13,13 @@
     "prepare": "",
     "blockedCommands": []
   },
-  "sources": {}
+  "sources": {
+    "github": {
+      "enabled": true,
+      "config": {
+        "repository": "owner/name",
+        "cli": "gh"
+      }
+    }
+  }
 }

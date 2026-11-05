@@ -1,0 +1,31 @@
+{
+  "exitCode": 1,
+  "codes": [
+    "X001",
+    "X002",
+    "X003",
+    "DEP006"
+  ],
+  "diagnostics": [
+    {
+      "code": "X001",
+      "severity": "error",
+      "path": "nope"
+    },
+    {
+      "code": "X002",
+      "severity": "error",
+      "path": "paused"
+    },
+    {
+      "code": "DEP006",
+      "severity": "error",
+      "path": "sources.github.config"
+    },
+    {
+      "code": "X003",
+      "severity": "error",
+      "path": "sources.github.enabled"
+    }
+  ]
+}

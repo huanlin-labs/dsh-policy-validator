@@ -1,0 +1,13 @@
+{
+  "exitCode": 0,
+  "codes": [
+    "SEM004"
+  ],
+  "diagnostics": [
+    {
+      "code": "SEM004",
+      "severity": "warning",
+      "path": "policy.sources.github.admission.issues.listedUnaddressed"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "exitCode": 1,
+  "codes": [
+    "EXE000"
+  ],
+  "diagnostics": [
+    {
+      "code": "EXE000",
+      "severity": "error",
+      "path": "executor"
+    }
+  ]
+}

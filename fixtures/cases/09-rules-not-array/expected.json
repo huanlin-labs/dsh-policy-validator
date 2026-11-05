@@ -2,5 +2,12 @@
   "exitCode": 1,
   "codes": [
     "POL001"
+  ],
+  "diagnostics": [
+    {
+      "code": "POL001",
+      "severity": "error",
+      "path": "policy.rules"
+    }
   ]
 }

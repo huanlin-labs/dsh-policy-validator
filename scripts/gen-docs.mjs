@@ -16,26 +16,30 @@ const SOURCES = {
   DEP003: 'src/deployment.ts:17', DEP004: 'src/deployment.ts:19', DEP005: 'src/deployment.ts:21',
   DEP006: 'src/deployment.ts:46,87-105', DEP007: 'src/deployment.ts:92-94', DEP008: 'src/deployment.ts:45-51',
   DEP009: 'src/deployment.ts:49-51',
+  DEP010: 'src/sources/github.ts:25-27', DEP011: 'src/sources/feishu.ts:21-29',
   POL000: 'src/policy.ts:79-82', POL001: 'src/policy.ts:80', POL002: 'src/policy.ts:67-69',
   POL003: 'src/policy.ts:13', POL004: 'src/policy.ts:80', POL005: 'src/policy.ts:67',
-  POL006: 'src/policy.ts:67-68', POL007: 'src/policy.ts:67',
+  POL006: 'src/policy.ts:67-68', POL007: 'src/policy.ts:67', POL008: 'src/policy.ts:79-82',
   SRC000: 'src/policy.ts:77-81', SRC001: 'src/policy.ts:81', SRC002: 'src/policy.ts:73,77',
   SRC003: 'src/policy.ts:119-121; src/infra/text.ts:19', SRC004: 'src/policy.ts:75-76',
   SRC005: 'src/policy.ts:75; src/admission.ts:9-10', SRC006: 'src/policy.ts:75',
   SRC007: 'src/policy.ts:122-126', SRC008: 'src/policy.ts:77 (catchall)',
+  SRC009: 'src/policy.ts:122-126',
   EVAL000: 'src/policy.ts:83-87', EVAL001: 'src/policy.ts:84', EVAL002: 'src/policy.ts:85',
   EVAL003: 'src/policy.ts:70-71,86', EVAL004: 'src/policy.ts:83-87',
   EXE000: 'src/policy.ts:90-97', EXE001: 'src/policy.ts:93', EXE002: 'src/policy.ts:94',
   EXE003: 'src/policy.ts:95', EXE004: 'src/policy.ts:88,96', EXE005: 'src/policy.ts:96',
   EXE006: 'src/policy.ts:70-71,92', EXE007: 'src/policy.ts:91-97',
   X000: 'src/policy.ts:99-105', X001: 'src/policy.ts:99-105', X002: 'src/policy.ts:100',
-  X003: 'src/policy.ts:98', X004: 'src/deployment.ts:87-105', X005: 'src/deployment.ts:114-119',
+  X003: 'src/policy.ts:98', X004: 'src/app/setup.ts:76-94', X005: 'src/app/setup.ts:80-85',
+  X006: 'src/sources/registry.ts',
   SEM001: 'src/policy.ts:55-58,184; docs/002-authorization.md:91-99',
   SEM002: 'src/policy.ts:212', SEM003: 'docs/002-authorization.md:56-73',
   SEM004: 'docs/002-authorization.md:63-71; src/policy.ts:199-201',
   SEM005: 'src/policy.ts:88-89; src/infra/environment.ts:18', SEM006: 'src/policy.ts:190',
   SEM007: 'src/policy.ts:99-105; docs/002-authorization.md:119-121',
   SEM008: 'docs/002-authorization.md:56-71', SEM009: 'src/policy.ts:63-68', SEM010: 'src/policy.ts:41-52',
+  SEM011: 'src/sources/github.ts:80-90; src/sources/feishu.ts:90-101',
 }
 
 const missing = CATALOG.filter(item => !SOURCES[item.code]).map(item => item.code)
@@ -43,8 +47,8 @@ if (missing.length) throw new Error(`missing source mapping: ${missing.join(', '
 
 const header = `# 上游依据
 
-快照：\`deepseek-ai/dsh-superagent-prototype\`，2026-10-31 发布，\`POLICY_REVISION="mandate-v3"\`。
-本地复核路径：\`E:\\资料库\\前沿科技\\DeepSeek-SuperAgent-2026-10\\源码\\dsh-superagent-prototype\`。
+快照：[\`deepseek-ai/dsh-superagent-prototype\`](https://github.com/deepseek-ai/dsh-superagent-prototype)，2026-10-31 发布，\`POLICY_REVISION="mandate-v3"\`。
+所有行号均指该公开仓库的 \`src/\` 文件；本仓库自己的 \`src/\` 是校验器实现，不是上游。
 
 上游日更。**升级快照前必须重新核对本表**：行号会漂移，语义也可能变。
 

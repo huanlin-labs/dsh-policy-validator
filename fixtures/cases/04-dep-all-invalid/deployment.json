@@ -6,10 +6,6 @@
   "worktreeRoot": "old",
   "github": {
     "repository": "bad",
-    "cli": "",
-    "branchPrefix": "x"
-  },
-  "feishu": {
-    "clii": "x"
+    "cli": ""
   }
 }

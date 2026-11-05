@@ -1,0 +1,13 @@
+{
+  "exitCode": 1,
+  "codes": [
+    "POL008"
+  ],
+  "diagnostics": [
+    {
+      "code": "POL008",
+      "severity": "error",
+      "path": "policy.autoSync"
+    }
+  ]
+}

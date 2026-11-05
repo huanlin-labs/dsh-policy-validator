@@ -1,0 +1,13 @@
+{
+  "exitCode": 1,
+  "codes": [
+    "X000"
+  ],
+  "diagnostics": [
+    {
+      "code": "X000",
+      "severity": "error",
+      "path": "settings"
+    }
+  ]
+}

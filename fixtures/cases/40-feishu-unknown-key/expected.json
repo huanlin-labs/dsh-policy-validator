@@ -1,0 +1,13 @@
+{
+  "exitCode": 1,
+  "codes": [
+    "DEP009"
+  ],
+  "diagnostics": [
+    {
+      "code": "DEP009",
+      "severity": "error",
+      "path": "sources.feishu.config.clii"
+    }
+  ]
+}

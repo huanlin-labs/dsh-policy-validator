@@ -1,0 +1,13 @@
+{
+  "exitCode": 0,
+  "codes": [
+    "SEM006"
+  ],
+  "diagnostics": [
+    {
+      "code": "SEM006",
+      "severity": "warning",
+      "path": "paused"
+    }
+  ]
+}

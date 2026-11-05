@@ -1,0 +1,73 @@
+{
+  "exitCode": 1,
+  "codes": [
+    "SRC001",
+    "SRC002",
+    "SRC003",
+    "SRC004",
+    "SRC006",
+    "SRC007",
+    "SRC008",
+    "SEM007",
+    "SEM011",
+    "X003",
+    "X006"
+  ],
+  "diagnostics": [
+    {
+      "code": "SRC001",
+      "severity": "error",
+      "path": "policy.sources.Bad"
+    },
+    {
+      "code": "SRC006",
+      "severity": "error",
+      "path": "policy.sources.Bad.admission.r.unlistedAddresed"
+    },
+    {
+      "code": "SRC002",
+      "severity": "error",
+      "path": "policy.sources.Bad.allowed[0].id"
+    },
+    {
+      "code": "SRC007",
+      "severity": "error",
+      "path": "policy.sources.Bad.bots[0]"
+    },
+    {
+      "code": "SRC004",
+      "severity": "error",
+      "path": "policy.sources.github.admission"
+    },
+    {
+      "code": "X003",
+      "severity": "error",
+      "path": "sources.Bad"
+    },
+    {
+      "code": "SEM007",
+      "severity": "warning",
+      "path": "policy.sources.Bad"
+    },
+    {
+      "code": "SEM011",
+      "severity": "warning",
+      "path": "policy.sources.Bad.admission.r"
+    },
+    {
+      "code": "SRC003",
+      "severity": "warning",
+      "path": "policy.sources.github.allowed[1].id"
+    },
+    {
+      "code": "SRC008",
+      "severity": "info",
+      "path": "policy.sources.Bad.allowedSync"
+    },
+    {
+      "code": "X006",
+      "severity": "info",
+      "path": "sources.Bad.config"
+    }
+  ]
+}

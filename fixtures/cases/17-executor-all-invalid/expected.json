@@ -1,0 +1,49 @@
+{
+  "exitCode": 1,
+  "codes": [
+    "EXE001",
+    "EXE002",
+    "EXE003",
+    "EXE004",
+    "EXE005",
+    "EXE006",
+    "EXE007"
+  ],
+  "diagnostics": [
+    {
+      "code": "EXE004",
+      "severity": "error",
+      "path": "executor.blockedCommands[0]"
+    },
+    {
+      "code": "EXE002",
+      "severity": "error",
+      "path": "executor.directory"
+    },
+    {
+      "code": "EXE001",
+      "severity": "error",
+      "path": "executor.maxWorkers"
+    },
+    {
+      "code": "EXE006",
+      "severity": "error",
+      "path": "executor.model"
+    },
+    {
+      "code": "EXE003",
+      "severity": "error",
+      "path": "executor.prepare"
+    },
+    {
+      "code": "EXE007",
+      "severity": "error",
+      "path": "executor.shell"
+    },
+    {
+      "code": "EXE005",
+      "severity": "warning",
+      "path": "executor.blockedCommands[2]"
+    }
+  ]
+}

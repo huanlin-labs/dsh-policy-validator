@@ -2,11 +2,12 @@
   "tool": "dsh-superagent-policy-validator",
   "schemaVersion": 1,
   "revision": "mandate-v3",
-  "policyVersion": "1672a12ddde7fddb9461fd2fb9dcd9a4",
+  "policyVersion": "d54ad3d321d6995db10cd73992427aa2",
   "inputs": {
-    "settings": "examples/valid/settings.json",
-    "deployment": "examples/valid/deployment.json"
+    "settings": "D:\\工作区\\实习\\产出\\作品-policy-validator\\examples\\valid\\settings.json",
+    "deployment": "D:\\工作区\\实习\\产出\\作品-policy-validator\\examples\\valid\\deployment.json"
   },
+  "expectation": null,
   "ok": true,
   "summary": {
     "error": 0,

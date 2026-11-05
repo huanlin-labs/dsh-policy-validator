@@ -31,16 +31,16 @@ test('a valid full config has no findings', () => {
       sources: {
         github: {
           allowed: [{ id: 'alice', name: 'Alice' }],
-          admission: { issue: { listedUnaddressed: 'inferred' } },
+          admission: { issues: { listedUnaddressed: 'inferred' } },
           bots: [{ id: 'dependabot[bot]' }],
         },
       },
     },
     eval: { mode: 'observe', timeoutSeconds: 120, model: null },
     executor: { maxWorkers: 3, directory: '', prepare: '', blockedCommands: ['npm'] },
-    sources: { github: { enabled: true, config: { receiveAll: true } } },
+    sources: { github: { enabled: true, config: { repository: 'a/b', cli: 'gh', observeIssues: true } } },
   }
-  const deployment = { stateDir: '/srv/dsh', github: { repository: 'a/b', cli: 'gh' } }
+  const deployment = { stateDir: '/srv/dsh' }
   const report = validate(settings, deployment)
   assert.deepEqual(codes(report), [])
   assert.equal(report.ok, true)
@@ -125,8 +125,8 @@ test('comparePolicies flags inferred mandates when auto is left', () => {
 test('admission matrix shows defaults and configured sources', () => {
   const matrix = admissionMatrix({ policy: { sources: { github: { allowed: [], admission: {} } } } })
   assert.equal(matrix.length, 1)
-  const row = matrix[0].rows[0]
-  assert.equal(row.row, '<default>')
+  const row = matrix[0].rows.find(item => item.row === '<default>')
+  assert.ok(row)
   assert.equal(row.cells.listedUnaddressed.value, 'inferred')
   assert.equal(row.cells.listedUnaddressed.source, 'default')
   assert.equal(row.cells.unlistedAddressed.value, 'ignore')
@@ -134,9 +134,10 @@ test('admission matrix shows defaults and configured sources', () => {
 
 test('admission matrix marks explicitly configured cells', () => {
   const matrix = admissionMatrix({
-    policy: { sources: { github: { allowed: [], admission: { issue: { listedUnaddressed: 'ignore' } } } } },
+    policy: { sources: { github: { allowed: [], admission: { issues: { listedUnaddressed: 'ignore' } } } } },
+    sources: { github: { enabled: true, config: { repository: 'a/b', cli: 'gh', observeIssues: true } } },
   })
-  const cell = matrix[0].rows[0].cells.listedUnaddressed
-  assert.equal(cell.value, 'ignore')
-  assert.equal(cell.source, 'config')
+  const row = matrix[0].rows.find(item => item.row === 'issues')
+  assert.equal(row.cells.listedUnaddressed.value, 'ignore')
+  assert.equal(row.cells.listedUnaddressed.source, 'config')
 })

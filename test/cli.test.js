@@ -14,10 +14,11 @@ test('--help lists the four subcommands and exits 0', () => {
   for (const word of ['check', 'matrix', 'version', 'rules']) assert.match(result.stdout, new RegExp(word))
 })
 
-test('no command prints usage and exits 2', () => {
+test('no command prints usage to stderr and exits 2', () => {
   const result = run()
   assert.equal(result.status, 2)
-  assert.match(result.stdout, /Usage:/)
+  assert.match(result.stderr, /Usage:/)
+  assert.equal(result.stdout, '')
 })
 
 test('check on the valid example exits 0', () => {
@@ -44,7 +45,7 @@ test('missing settings file exits 2 with one readable reason', () => {
 })
 
 test('--strict turns a warning-only fixture into exit 1', () => {
-  const result = run('check', '--settings', 'fixtures/cases/33-sem-duplicate-allowed/settings.json', '--deployment', 'fixtures/cases/33-sem-duplicate-allowed/deployment.json', '--strict')
+  const result = run('check', '--settings', 'fixtures/cases/44-sem-duplicate-allowed/settings.json', '--deployment', 'fixtures/cases/44-sem-duplicate-allowed/deployment.json', '--strict')
   assert.equal(result.status, 1)
 })
 

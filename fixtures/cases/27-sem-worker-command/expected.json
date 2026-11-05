@@ -1,0 +1,13 @@
+{
+  "exitCode": 1,
+  "codes": [
+    "SEM005"
+  ],
+  "diagnostics": [
+    {
+      "code": "SEM005",
+      "severity": "error",
+      "path": "executor.blockedCommands[0]"
+    }
+  ]
+}

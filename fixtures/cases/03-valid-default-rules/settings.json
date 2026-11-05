@@ -1,6 +1,14 @@
 {
   "paused": false,
   "policy": {
+    "rules": [
+      {
+        "id": "a",
+        "name": "A",
+        "enabled": true,
+        "instruction": "Do the thing."
+      }
+    ],
     "sources": {}
   },
   "eval": {
@@ -13,5 +21,13 @@
     "prepare": "",
     "blockedCommands": []
   },
-  "sources": {}
+  "sources": {
+    "github": {
+      "enabled": true,
+      "config": {
+        "repository": "owner/name",
+        "cli": "gh"
+      }
+    }
+  }
 }

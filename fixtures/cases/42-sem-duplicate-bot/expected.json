@@ -1,0 +1,19 @@
+{
+  "exitCode": 0,
+  "codes": [
+    "SEM008",
+    "SRC009"
+  ],
+  "diagnostics": [
+    {
+      "code": "SRC009",
+      "severity": "warning",
+      "path": "policy.sources.github.bots[1].id"
+    },
+    {
+      "code": "SEM008",
+      "severity": "info",
+      "path": "policy.sources.github.allowed"
+    }
+  ]
+}

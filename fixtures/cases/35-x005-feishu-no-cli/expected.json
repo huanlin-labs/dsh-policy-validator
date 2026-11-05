@@ -1,0 +1,13 @@
+{
+  "exitCode": 0,
+  "codes": [
+    "X005"
+  ],
+  "diagnostics": [
+    {
+      "code": "X005",
+      "severity": "warning",
+      "path": "feishu"
+    }
+  ]
+}

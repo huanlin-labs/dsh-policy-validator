@@ -1,0 +1,13 @@
+{
+  "exitCode": 1,
+  "codes": [
+    "SRC004"
+  ],
+  "diagnostics": [
+    {
+      "code": "SRC004",
+      "severity": "error",
+      "path": "policy.sources.github.admission"
+    }
+  ]
+}

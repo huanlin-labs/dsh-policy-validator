@@ -1,0 +1,13 @@
+{
+  "exitCode": 0,
+  "codes": [
+    "SRC003"
+  ],
+  "diagnostics": [
+    {
+      "code": "SRC003",
+      "severity": "warning",
+      "path": "policy.sources.github.allowed[1].id"
+    }
+  ]
+}

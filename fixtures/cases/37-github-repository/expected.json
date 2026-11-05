@@ -1,0 +1,13 @@
+{
+  "exitCode": 1,
+  "codes": [
+    "DEP006"
+  ],
+  "diagnostics": [
+    {
+      "code": "DEP006",
+      "severity": "error",
+      "path": "sources.github.config.repository"
+    }
+  ]
+}

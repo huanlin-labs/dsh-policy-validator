@@ -1,0 +1,58 @@
+{
+  "paused": false,
+  "policy": {
+    "rules": [],
+    "sources": {
+      "Bad": {
+        "allowed": [
+          {}
+        ],
+        "admission": {
+          "r": {
+            "unlistedAddresed": "ignore"
+          }
+        },
+        "bots": [
+          "x"
+        ],
+        "allowedSync": 1
+      },
+      "github": {
+        "allowed": [
+          {
+            "id": "a"
+          },
+          {
+            "id": "A"
+          }
+        ],
+        "admission": []
+      }
+    }
+  },
+  "eval": {
+    "mode": "observe",
+    "timeoutSeconds": 120,
+    "model": null
+  },
+  "executor": {
+    "model": null,
+    "maxWorkers": 3,
+    "directory": "",
+    "prepare": "",
+    "blockedCommands": []
+  },
+  "sources": {
+    "Bad": {
+      "enabled": true,
+      "config": {}
+    },
+    "github": {
+      "enabled": true,
+      "config": {
+        "repository": "owner/name",
+        "cli": "gh"
+      }
+    }
+  }
+}

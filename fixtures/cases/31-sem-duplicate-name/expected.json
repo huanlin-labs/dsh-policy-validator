@@ -1,0 +1,13 @@
+{
+  "exitCode": 0,
+  "codes": [
+    "SEM009"
+  ],
+  "diagnostics": [
+    {
+      "code": "SEM009",
+      "severity": "warning",
+      "path": "policy.rules[1].name"
+    }
+  ]
+}

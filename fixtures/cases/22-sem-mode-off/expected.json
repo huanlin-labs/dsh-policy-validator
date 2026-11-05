@@ -1,0 +1,13 @@
+{
+  "exitCode": 0,
+  "codes": [
+    "SEM001"
+  ],
+  "diagnostics": [
+    {
+      "code": "SEM001",
+      "severity": "warning",
+      "path": "eval.mode"
+    }
+  ]
+}

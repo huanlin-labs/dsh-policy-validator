@@ -2,7 +2,7 @@
 
 ## 结论
 
-截至 2026-11-05，没有找到「dsh-superagent Policy 静态校验器」的现成实现。这个位置是空的，但上游已经提供了**运行时**校验，立项时必须避开重复。
+截至 2026-11-05，**公开可检索范围内未发现**「dsh-superagent Policy 静态校验器」的现成实现（检索式与盲区见文末）。这个位置是空的，但上游已经提供了**运行时**校验，立项时必须避开重复。
 
 ## 检索方法
 
@@ -26,7 +26,7 @@
 
 ### 2. 生态：五天里长出一圈周边，没有校验器
 
-GitHub 搜索 `dsh-superagent` 返回 479 个仓库（2026-11-05）。抽样核对名称与描述：
+GitHub 搜索 `dsh-superagent` 返回 479 个仓库（2026-11-05 的 GitHub API 查询；该数字会随时间变化）。抽样核对名称与描述：
 
 - `Check-mj/dsh-superagent-windows`：Windows 移植 + 桌面应用 + Watchdog。
 - `deepseekv41flash/dsh-superagent-panel`：多实例管理面板。

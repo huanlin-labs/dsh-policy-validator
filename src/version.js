@@ -7,7 +7,7 @@
  * Tickets receive a policy-changed Input, and revalidation may revoke a Mandate.
  */
 import { createHash } from 'node:crypto'
-import { POLICY_REVISION, normalizeSettings } from './model.js'
+import { POLICY_REVISION, isPlainObject, normalizeSettings } from './model.js'
 
 /** src/core/ids.ts:3-5 — sha256 over JSON.stringify(values), first 32 hex chars. */
 export function key(...values) {
@@ -20,11 +20,23 @@ const pick = (value, fields) => {
   return out
 }
 
+const trimmed = value => (typeof value === 'string' ? value.trim() : value)
+
 /** Canonical rule shape in RuleSchema declaration order (src/policy.ts:67). */
-const canonicalRule = rule => pick(rule, ['id', 'name', 'enabled', 'instruction'])
+const canonicalRule = rule => {
+  const out = pick(rule, ['id', 'name', 'enabled', 'instruction'])
+  if (typeof out.name === 'string') out.name = trimmed(out.name)
+  if (typeof out.instruction === 'string') out.instruction = trimmed(out.instruction)
+  return out
+}
 
 /** Canonical allowed entry in AllowedSchema declaration order (src/policy.ts:73). */
-const canonicalAllowed = entry => pick(entry, ['id', 'name'])
+const canonicalAllowed = entry => {
+  const out = pick(entry, ['id', 'name'])
+  if (typeof out.id === 'string') out.id = trimmed(out.id)
+  if (typeof out.name === 'string') out.name = trimmed(out.name)
+  return out
+}
 
 /** Canonical admission row in AdmissionRowSchema declaration order (src/policy.ts:75). */
 const canonicalRow = row =>
@@ -36,11 +48,12 @@ const canonicalRow = row =>
  * produces when it parses SourcePolicySchema.
  */
 function canonicalSourcePolicy(part = {}) {
+  if (!isPlainObject(part)) return { allowed: [], admission: {} }
   const { allowed, admission, ...rest } = part
   return {
     allowed: Array.isArray(allowed) ? allowed.map(canonicalAllowed) : [],
     admission: Object.fromEntries(
-      Object.entries(admission && typeof admission === 'object' ? admission : {}).map(
+      Object.entries(isPlainObject(admission) ? admission : {}).map(
         ([row, value]) => [row, canonicalRow(value)],
       ),
     ),

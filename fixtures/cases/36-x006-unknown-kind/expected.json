@@ -1,0 +1,19 @@
+{
+  "exitCode": 0,
+  "codes": [
+    "X006",
+    "SEM007"
+  ],
+  "diagnostics": [
+    {
+      "code": "SEM007",
+      "severity": "warning",
+      "path": "policy.sources.telegram"
+    },
+    {
+      "code": "X006",
+      "severity": "info",
+      "path": "sources.telegram.config"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "exitCode": 1,
+  "codes": [
+    "DEP010"
+  ],
+  "diagnostics": [
+    {
+      "code": "DEP010",
+      "severity": "error",
+      "path": "sources.github.config.pollSeconds"
+    }
+  ]
+}

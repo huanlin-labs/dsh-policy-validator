@@ -1,0 +1,35 @@
+{
+  "paused": false,
+  "policy": {
+    "rules": [
+      {
+        "id": "a",
+        "name": "A",
+        "enabled": false,
+        "instruction": "Do the thing."
+      }
+    ],
+    "sources": {}
+  },
+  "eval": {
+    "mode": "observe",
+    "timeoutSeconds": 120,
+    "model": null
+  },
+  "executor": {
+    "model": null,
+    "maxWorkers": 3,
+    "directory": "",
+    "prepare": "",
+    "blockedCommands": []
+  },
+  "sources": {
+    "github": {
+      "enabled": true,
+      "config": {
+        "repository": "owner/name",
+        "cli": "gh"
+      }
+    }
+  }
+}

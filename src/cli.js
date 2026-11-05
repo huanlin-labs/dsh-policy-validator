@@ -2,14 +2,14 @@
 /**
  * CLI entry point. No dependencies, no network, no service.
  *
- *   check   --settings <file> [--deployment <file>] [--format text|json] [--strict] [--max-warnings N]
+ *   check   --settings <file> [--deployment <file>] [--format text|json] [--strict] [--max-warnings N] [--expect <hash>]
  *   matrix  --settings <file> [--format text|json]
  *   version --settings <file> [--compare <file>] [--expect <hash>]
  *   rules   [--format text|json]
  */
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
-import { POLICY_REVISION } from './model.js'
+import { POLICY_REVISION, isPlainObject } from './model.js'
 import { CATALOG } from './catalog.js'
 import { validate } from './index.js'
 import { admissionMatrix, renderMatrixText, LISTED_ADDRESSED_RULE } from './matrix.js'
@@ -19,32 +19,46 @@ import { renderText, exitCodeOf } from './report.js'
 const USAGE = `dsh-superagent policy validator — offline pre-flight for a Policy and its deployment config
 
 Usage:
-  policy-validator check   --settings <settings.json> [--deployment <config.json>] [--format text|json] [--strict] [--max-warnings N]
+  policy-validator check   --settings <settings.json> [--deployment <config.json>] [--format text|json] [--strict] [--max-warnings N] [--expect <hash>]
   policy-validator matrix  --settings <settings.json> [--format text|json]
   policy-validator version --settings <settings.json> [--compare <other.json>] [--expect <hash>]
   policy-validator rules   [--format text|json]
 
 Exit codes: 0 = no error, 1 = findings or expectation mismatch, 2 = usage or file error.
 `
-const BOOLEAN_FLAGS = new Set(['strict', 'help'])
-const VALUE_FLAGS = new Set(['settings', 'deployment', 'format', 'max-warnings', 'compare', 'expect'])
-const ALLOWED_FLAGS = new Set([...BOOLEAN_FLAGS, ...VALUE_FLAGS])
 
-function parseArgs(argv) {
+/** Per-command flags; anything else is a usage error, not a silent no-op. */
+const SPECS = {
+  check: { boolean: ['strict', 'help'], value: ['settings', 'deployment', 'format', 'max-warnings', 'expect'] },
+  matrix: { boolean: ['help'], value: ['settings', 'format'] },
+  version: { boolean: ['help'], value: ['settings', 'compare', 'expect', 'format'] },
+  rules: { boolean: ['help'], value: ['format'] },
+}
+
+function parseArgs(argv, spec) {
   const flags = {}
+  const boolean = new Set(spec.boolean)
+  const value = new Set(spec.value)
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]
+    if (arg === '-h') {
+      flags.help = true
+      continue
+    }
     if (!arg.startsWith('--')) throw new Error(`unexpected argument "${arg}"`)
     const body = arg.slice(2)
     const eq = body.indexOf('=')
     const name = eq === -1 ? body : body.slice(0, eq)
-    if (!ALLOWED_FLAGS.has(name)) throw new Error(`unknown option "--${name}"`)
-    if (eq !== -1) {
-      flags[name] = body.slice(eq + 1)
+    if (!boolean.has(name) && !value.has(name)) throw new Error(`unknown option "--${name}" for this command`)
+    if (boolean.has(name)) {
+      if (eq === -1) flags[name] = true
+      else if (body.slice(eq + 1) === 'true') flags[name] = true
+      else if (body.slice(eq + 1) === 'false') flags[name] = false
+      else throw new Error(`--${name} must be true or false`)
       continue
     }
-    if (BOOLEAN_FLAGS.has(name)) {
-      flags[name] = true
+    if (eq !== -1) {
+      flags[name] = body.slice(eq + 1)
       continue
     }
     const next = argv[i + 1]
@@ -64,10 +78,15 @@ function readJson(path, label) {
     throw new Error(`cannot read ${label} "${path}": ${error.message}`)
   }
   try {
-    return JSON.parse(text)
+    return JSON.parse(text.replace(/^\uFEFF/, ''))
   } catch (error) {
     throw new Error(`${label} "${path}" is not valid JSON: ${error.message}`)
   }
+}
+
+function requireObject(value, path, label) {
+  if (!isPlainObject(value)) throw new Error(`${label} "${path}" must contain a JSON object`)
+  return value
 }
 
 const formatOf = flags => {
@@ -84,28 +103,30 @@ function printReport(report, format) {
 function cmdCheck(flags) {
   if (!flags.settings) throw new Error('check requires --settings <file>')
   const format = formatOf(flags)
+  let maxWarnings
+  if (flags['max-warnings'] !== undefined) {
+    if (!/^\d+$/.test(flags['max-warnings'])) throw new Error('--max-warnings must be a non-negative integer')
+    maxWarnings = Number(flags['max-warnings'])
+  }
   const settings = readJson(flags.settings, 'settings')
   const deployment = flags.deployment ? readJson(flags.deployment, 'deployment') : undefined
-  const maxWarnings = flags['max-warnings'] === undefined ? undefined : Number(flags['max-warnings'])
-  if (maxWarnings !== undefined && (!Number.isInteger(maxWarnings) || maxWarnings < 0)) throw new Error('--max-warnings must be a non-negative integer')
   const report = validate(settings, deployment, {
-    settingsPath: flags.settings,
-    deploymentPath: flags.deployment ?? null,
+    settingsPath: resolve(flags.settings),
+    deploymentPath: flags.deployment ? resolve(flags.deployment) : null,
     strict: flags.strict === true,
     maxWarnings,
+    expectVersion: flags.expect,
   })
   printReport(report, format)
-  if (flags.expect && flags.expect !== report.policyVersion) {
-    process.stderr.write(`policy version mismatch: expected ${flags.expect}, got ${report.policyVersion}\n`)
-    return 1
-  }
+  if (report.expectation && !report.expectation.match)
+    process.stderr.write(`policy version mismatch: expected ${report.expectation.expected}, got ${report.expectation.actual}\n`)
   return exitCodeOf(report)
 }
 
 function cmdMatrix(flags) {
   if (!flags.settings) throw new Error('matrix requires --settings <file>')
   const format = formatOf(flags)
-  const settings = readJson(flags.settings, 'settings')
+  const settings = requireObject(readJson(flags.settings, 'settings'), flags.settings, 'settings')
   const matrix = admissionMatrix(settings)
   if (format === 'json') {
     process.stdout.write(JSON.stringify({ revision: POLICY_REVISION, rule: LISTED_ADDRESSED_RULE, sources: matrix }, null, 2) + '\n')
@@ -118,9 +139,9 @@ function cmdMatrix(flags) {
 function cmdVersion(flags) {
   if (!flags.settings) throw new Error('version requires --settings <file>')
   const format = formatOf(flags)
-  const settings = readJson(flags.settings, 'settings')
+  const settings = requireObject(readJson(flags.settings, 'settings'), flags.settings, 'settings')
   if (flags.compare) {
-    const other = readJson(flags.compare, 'comparison settings')
+    const other = requireObject(readJson(flags.compare, 'comparison settings'), flags.compare, 'comparison settings')
     const result = comparePolicies(settings, other)
     if (format === 'json') process.stdout.write(JSON.stringify(result, null, 2) + '\n')
     else {
@@ -132,6 +153,10 @@ function cmdVersion(flags) {
         ...result.impacts.map(impact => `  impact ${impact.code}: ${impact.message}`),
       ]
       process.stdout.write(lines.join('\n') + '\n')
+    }
+    if (flags.expect && flags.expect !== result.versionAfter) {
+      process.stderr.write(`policy version mismatch: expected ${flags.expect}, got ${result.versionAfter}\n`)
+      return 1
     }
     return 0
   }
@@ -158,10 +183,12 @@ function cmdRules(flags) {
 function main(argv) {
   const command = argv[0]
   if (!command || command === '--help' || command === '-h' || command === 'help') {
-    process.stdout.write(USAGE)
+    if (command) process.stdout.write(USAGE)
+    else process.stderr.write(USAGE)
     return command ? 0 : 2
   }
-  const flags = parseArgs(argv.slice(1))
+  if (!SPECS[command]) throw new Error(`unknown command "${command}" (expected check, matrix, version or rules)`)
+  const flags = parseArgs(argv.slice(1), SPECS[command])
   if (flags.help) {
     process.stdout.write(USAGE)
     return 0
@@ -171,7 +198,6 @@ function main(argv) {
     case 'matrix': return cmdMatrix(flags)
     case 'version': return cmdVersion(flags)
     case 'rules': return cmdRules(flags)
-    default: throw new Error(`unknown command "${command}" (expected check, matrix, version or rules)`)
   }
 }
 

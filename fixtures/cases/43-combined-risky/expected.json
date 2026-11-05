@@ -1,0 +1,31 @@
+{
+  "exitCode": 1,
+  "codes": [
+    "SEM001",
+    "SEM003",
+    "SEM005",
+    "SEM006"
+  ],
+  "diagnostics": [
+    {
+      "code": "SEM005",
+      "severity": "error",
+      "path": "executor.blockedCommands[0]"
+    },
+    {
+      "code": "SEM001",
+      "severity": "warning",
+      "path": "eval.mode"
+    },
+    {
+      "code": "SEM006",
+      "severity": "warning",
+      "path": "paused"
+    },
+    {
+      "code": "SEM003",
+      "severity": "warning",
+      "path": "policy.sources.github.admission.issues.unlistedAddressed"
+    }
+  ]
+}

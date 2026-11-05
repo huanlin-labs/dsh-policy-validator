@@ -16,12 +16,15 @@ for (const name of names) {
   const report = validate(settings, deployment)
   const actual = [...new Set(report.diagnostics.map(item => item.code))].sort()
   const wanted = [...new Set(expected.codes)].sort()
+  const snapshot = report.diagnostics.map(({ code, severity, path }) => ({ code, severity, path }))
   const exitMatches = (expected.exitCode === 0) === report.ok
-  if (JSON.stringify(actual) !== JSON.stringify(wanted) || !exitMatches) {
+  const snapshotMatches = JSON.stringify(snapshot) === JSON.stringify(expected.diagnostics)
+  if (JSON.stringify(actual) !== JSON.stringify(wanted) || !exitMatches || !snapshotMatches) {
     failed += 1
     console.log(`FAIL ${name}`)
     console.log(`  expected: ${wanted.join(',') || '(none)'}  exit=${expected.exitCode}`)
     console.log(`  actual:   ${actual.join(',') || '(none)'}  ok=${report.ok}`)
+    if (!snapshotMatches) console.log(`  snapshot differs (${snapshot.length} vs ${expected.diagnostics.length} diagnostics)`)
   }
 }
 console.log(`${names.length - failed}/${names.length} fixtures match`)

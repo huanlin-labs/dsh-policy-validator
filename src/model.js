@@ -147,5 +147,33 @@ export function normalizeDeployment(input) {
   }
 }
 
+/** src/sources/github.ts:25-28 — GithubConfigSchema defaults. */
+export function normalizeGithubConfig(input) {
+  const raw = objectOr(input, {})
+  return {
+    repository: raw.repository ?? '',
+    cli: raw.cli ?? '',
+    pollSeconds: raw.pollSeconds ?? 60,
+    failuresBeforeError: raw.failuresBeforeError ?? 3,
+    observeIssues: raw.observeIssues ?? false,
+    observePulls: raw.observePulls ?? false,
+    observeComments: raw.observeComments ?? false,
+    observeCi: raw.observeCi ?? false,
+  }
+}
+
+/** src/sources/feishu.ts:21-29 — FeishuConfigSchema defaults. */
+export function normalizeFeishuConfig(input) {
+  const raw = objectOr(input, {})
+  return {
+    cli: raw.cli ?? '',
+    readPageSize: raw.readPageSize ?? 20,
+    linkTimeoutMs: raw.linkTimeoutMs ?? 5000,
+    chats: Array.isArray(raw.chats) ? raw.chats : [],
+    directMessages: raw.directMessages ?? true,
+    otherChats: raw.otherChats ?? 'none',
+  }
+}
+
 /** The enabled rules of a normalized settings object, in declaration order. */
 export const enabledRules = settings => settings.policy.rules.filter(rule => rule?.enabled === true)

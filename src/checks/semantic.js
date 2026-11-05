@@ -6,7 +6,8 @@
  * A diagnostic is a plain object:
  *   { code, severity, path, message, consequence, hint, source }
  */
-import { WORKER_COMMANDS, normalizeSettings, sameName } from '../model.js'
+import { WORKER_COMMANDS, normalizeSettings } from '../model.js'
+import { rowOf, sourceRows } from '../kinds.js'
 
 const diag = (code, severity, path, message, consequence, hint, source) => ({
   code,
@@ -18,18 +19,7 @@ const diag = (code, severity, path, message, consequence, hint, source) => ({
   source,
 })
 
-/** True/false when the stored Source config says whether a scope observes all messages; undefined when unknown. */
-function observesAll(settings, source, row) {
-  const config = settings.sources?.[source]?.config
-  if (!config || typeof config !== 'object') return undefined
-  if (config.receiveAll === false || config.allMessages === false || config.observeAll === false) return false
-  if (config.receiveAll === true || config.allMessages === true || config.observeAll === true) return true
-  if (Array.isArray(config.chats) && row) {
-    const chat = config.chats.find(item => item && item.chatId === row)
-    if (chat) return chat.listen === 'all'
-  }
-  return undefined
-}
+const KNOWN_KINDS = new Set(['github', 'feishu'])
 
 export function semanticDiagnostics(settingsInput) {
   const settings = normalizeSettings(settingsInput)
@@ -58,6 +48,7 @@ export function semanticDiagnostics(settingsInput) {
   for (const [source, part] of Object.entries(sources)) {
     const table = part && typeof part === 'object' && !Array.isArray(part) ? part.admission : undefined
     if (!table || typeof table !== 'object') continue
+    const { known } = sourceRows(settings, source)
     for (const [row, cells] of Object.entries(table)) {
       if (!cells || typeof cells !== 'object') continue
       if (cells.unlistedAddressed === 'explicit') {
@@ -67,15 +58,36 @@ export function semanticDiagnostics(settingsInput) {
           'Keep "explicit" only for a dedicated support chat you actually want open to everyone; otherwise use "inferred" or "ignore".',
           'docs/002-authorization.md:56-73'))
       }
-      for (const cell of ['listedUnaddressed', 'unlistedUnaddressed']) {
+      let produced
+      try {
+        produced = rowOf(settings, source, row)
+      } catch {
+        produced = undefined
+      }
+      if (!known) {
+        out.push(diag('SEM011', 'warning', `policy.sources.${source}.admission.${row}`,
+          `the row "${row}" may never be produced: "${source}" is not a Source kind this snapshot knows`,
+          'The admission table cannot be projected against the Source kind, so this row is either dead or the name is misspelled.',
+          'Check the Source kind and the row ids it exposes before relying on this row.',
+          'src/sources/registry.ts; docs/002-authorization.md:63-71'))
+        continue
+      }
+      if (!produced) {
+        out.push(diag('SEM011', 'warning', `policy.sources.${source}.admission.${row}`,
+          `the row "${row}" is never produced by the "${source}" Source`,
+          'This Source builds its admission rows from its stored config; a row it never produces can never become a Trigger, so its cells are dead.',
+          `Use one of the row ids the ${source} kind exposes, or remove the row.`,
+          'src/sources/github.ts:80-90; src/sources/feishu.ts:90-101'))
+        continue
+      }
+      for (const cell of ['listedUnaddressed', 'unlistedUnaddressed'] ) {
         if (cells[cell] === undefined) continue
-        const observed = observesAll(settings, source, row)
-        if (observed === false) {
+        if (produced.cells[cell] === false) {
           out.push(diag('SEM004', 'warning', `policy.sources.${source}.admission.${row}.${cell}`,
-            `unaddressed cell "${cell}" is configured but this scope only receives mentions`,
-            'The cell is unreachable: unaddressed messages never reach this scope, so its value cannot affect any Trigger.',
-            'Set the scope to receive all messages, or remove the cell to avoid a false sense of control.',
-            'docs/002-authorization.md:63-71; src/policy.ts:199-201'))
+            `the row "${row}" never offers the "${cell}" cell`,
+            'The Source marks this cell unavailable for the row (for example a mentions-only chat, or a GitHub row whose observe switch is off), so the configured value cannot affect any Trigger.',
+            'Turn on the observation the row depends on, or remove the cell to avoid a false sense of control.',
+            'src/sources/github.ts:80-90; src/sources/feishu.ts:90-101'))
         }
       }
     }
@@ -83,7 +95,7 @@ export function semanticDiagnostics(settingsInput) {
 
   const blocked = Array.isArray(settings.executor.blockedCommands) ? settings.executor.blockedCommands : []
   for (const [index, name] of blocked.entries()) {
-    if (WORKER_COMMANDS.some(command => sameName(command, name))) {
+    if (WORKER_COMMANDS.includes(name)) {
       out.push(diag('SEM005', 'error', `executor.blockedCommands[${index}]`,
         `"${name}" is a worker command and cannot be blocked`,
         'The executor needs this command to run a Ticket; upstream rejects the whole configuration instead of silently ignoring it.',
@@ -101,14 +113,14 @@ export function semanticDiagnostics(settingsInput) {
   }
 
   for (const source of Object.keys(sources)) {
-    const instance = settings.sources?.[source]
-    if (!instance) {
+    const instance = Object.hasOwn(settings.sources, source) ? settings.sources[source] : undefined
+    if (!KNOWN_KINDS.has(source)) {
       out.push(diag('SEM007', 'warning', `policy.sources.${source}`,
-        `policy for "${source}" has no Source instance`,
-        'Without an instance this Policy part never sees a Trigger; its rules and admission cells are dead weight.',
-        `Add settings.sources.${source} or remove the policy block.`,
+        `policy for "${source}" targets a Source kind this snapshot does not know`,
+        'Unless another plugin registers that kind, the Policy part sees no Trigger and its rules and admission cells are dead weight.',
+        'Check the Source name, or remove the policy block.',
         'src/policy.ts:99-105; src/sources/registry.ts'))
-    } else if (instance.enabled === false) {
+    } else if (instance && instance.enabled === false) {
       out.push(diag('SEM007', 'warning', `policy.sources.${source}`,
         `Source instance "${source}" is disabled`,
         'A disabled Source receives nothing, so every rule and admission cell for it is unreachable.',

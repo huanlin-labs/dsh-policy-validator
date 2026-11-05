@@ -1,0 +1,31 @@
+{
+  "paused": false,
+  "policy": {
+    "rules": [],
+    "sources": {}
+  },
+  "eval": {
+    "mode": "sometimes",
+    "timeoutSeconds": 5,
+    "model": {
+      "provider": ""
+    },
+    "retries": 1
+  },
+  "executor": {
+    "model": null,
+    "maxWorkers": 3,
+    "directory": "",
+    "prepare": "",
+    "blockedCommands": []
+  },
+  "sources": {
+    "github": {
+      "enabled": true,
+      "config": {
+        "repository": "owner/name",
+        "cli": "gh"
+      }
+    }
+  }
+}

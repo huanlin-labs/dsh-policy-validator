@@ -1,0 +1,9 @@
+# NOTICE
+
+This project mirrors constants, default values and a few default rule strings
+from `deepseek-ai/dsh-superagent-prototype` (MIT, snapshot 2026-10-31,
+`POLICY_REVISION="mandate-v3"`). Those parts remain under the upstream MIT
+license and copyright; see the upstream repository for its NOTICE and LICENSE.
+
+Everything else — the CLI, the 62 diagnostic rules, the admission projection,
+the fixtures and the tests — is original work for this project.

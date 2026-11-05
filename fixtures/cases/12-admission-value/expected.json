@@ -1,0 +1,13 @@
+{
+  "exitCode": 1,
+  "codes": [
+    "SRC005"
+  ],
+  "diagnostics": [
+    {
+      "code": "SRC005",
+      "severity": "error",
+      "path": "policy.sources.github.admission.issues.listedUnaddressed"
+    }
+  ]
+}

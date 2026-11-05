@@ -1,0 +1,13 @@
+{
+  "exitCode": 0,
+  "codes": [
+    "SEM003"
+  ],
+  "diagnostics": [
+    {
+      "code": "SEM003",
+      "severity": "warning",
+      "path": "policy.sources.github.admission.issues.unlistedAddressed"
+    }
+  ]
+}

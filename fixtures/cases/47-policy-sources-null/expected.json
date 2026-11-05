@@ -1,0 +1,13 @@
+{
+  "exitCode": 1,
+  "codes": [
+    "SRC000"
+  ],
+  "diagnostics": [
+    {
+      "code": "SRC000",
+      "severity": "error",
+      "path": "policy.sources"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "exitCode": 1,
+  "codes": [
+    "DEP008"
+  ],
+  "diagnostics": [
+    {
+      "code": "DEP008",
+      "severity": "error",
+      "path": "sources.github.config.branchPrefix"
+    }
+  ]
+}

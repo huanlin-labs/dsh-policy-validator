@@ -1,0 +1,53 @@
+{
+  "paused": false,
+  "policy": {
+    "rules": [],
+    "sources": {
+      "feishu": {
+        "allowed": [
+          {
+            "id": "ou_a"
+          }
+        ],
+        "admission": {
+          "oc_a": {
+            "listedUnaddressed": "inferred"
+          }
+        }
+      }
+    }
+  },
+  "eval": {
+    "mode": "observe",
+    "timeoutSeconds": 120,
+    "model": null
+  },
+  "executor": {
+    "model": null,
+    "maxWorkers": 3,
+    "directory": "",
+    "prepare": "",
+    "blockedCommands": []
+  },
+  "sources": {
+    "github": {
+      "enabled": true,
+      "config": {
+        "repository": "owner/name",
+        "cli": "gh"
+      }
+    },
+    "feishu": {
+      "enabled": true,
+      "config": {
+        "cli": "lark-cli",
+        "chats": [
+          {
+            "chatId": "oc_a",
+            "listen": "mentions"
+          }
+        ]
+      }
+    }
+  }
+}

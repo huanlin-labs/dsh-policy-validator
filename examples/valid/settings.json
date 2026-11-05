@@ -19,8 +19,8 @@
       "github": {
         "allowed": [{ "id": "alice", "name": "Alice" }],
         "admission": {
-          "issue": { "listedUnaddressed": "inferred" },
-          "pull_request": { "listedUnaddressed": "inferred" }
+          "issues": { "listedUnaddressed": "inferred" },
+          "pulls": { "listedUnaddressed": "inferred" }
         },
         "bots": [{ "id": "dependabot[bot]", "name": "Dependabot" }]
       }
@@ -35,6 +35,14 @@
     "blockedCommands": ["npm"]
   },
   "sources": {
-    "github": { "enabled": true, "config": {} }
+    "github": {
+      "enabled": true,
+      "config": {
+        "repository": "deepseek-ai/dsh-superagent-prototype",
+        "cli": "gh",
+        "observeIssues": true,
+        "observePulls": true
+      }
+    }
   }
 }

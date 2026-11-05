@@ -1,0 +1,13 @@
+{
+  "exitCode": 1,
+  "codes": [
+    "DEP007"
+  ],
+  "diagnostics": [
+    {
+      "code": "DEP007",
+      "severity": "error",
+      "path": "sources.github.config.cli"
+    }
+  ]
+}

@@ -13,7 +13,7 @@
         "id": "dup",
         "name": "Dup",
         "enabled": true,
-        "instruction": "x"
+        "instruction": "Do the thing."
       },
       {
         "id": "dup",
@@ -36,5 +36,13 @@
     "prepare": "",
     "blockedCommands": []
   },
-  "sources": {}
+  "sources": {
+    "github": {
+      "enabled": true,
+      "config": {
+        "repository": "owner/name",
+        "cli": "gh"
+      }
+    }
+  }
 }

@@ -8,6 +8,13 @@
 export const SEVERITY_ORDER = Object.freeze({ error: 0, warning: 1, info: 2 })
 export const SEVERITIES = Object.freeze(['error', 'warning', 'info'])
 
+/** Mark every upstream reference so a reader does not mistake it for this repo's src/. */
+function markSource(value) {
+  const text = String(value ?? '')
+  if (!text) return ''
+  return text.replace(/(^|[;\s])((?:src|docs)\/)/g, '$1upstream:$2')
+}
+
 /** Fill optional fields so every diagnostic has the same keys, in the same order. */
 export function normalizeDiagnostic(item) {
   return {
@@ -17,11 +24,12 @@ export function normalizeDiagnostic(item) {
     message: String(item.message ?? ''),
     consequence: String(item.consequence ?? ''),
     hint: String(item.hint ?? ''),
-    source: String(item.source ?? ''),
+    source: markSource(item.source),
   }
 }
 
-const rank = (a, b) => (SEVERITY_ORDER[a.severity] - SEVERITY_ORDER[b.severity]) || a.path.localeCompare(b.path) || a.code.localeCompare(b.code)
+const cmp = (a, b) => (a < b ? -1 : a > b ? 1 : 0)
+const rank = (a, b) => (SEVERITY_ORDER[a.severity] - SEVERITY_ORDER[b.severity]) || cmp(a.path, b.path) || cmp(a.code, b.code)
 
 /** Stable, deduplicated diagnostics. */
 export function sortDiagnostics(diagnostics) {
@@ -47,7 +55,14 @@ export function buildReport(diagnostics, options = {}) {
   const strict = options.strict === true
   const budget = Number.isInteger(options.maxWarnings) ? options.maxWarnings : null
   const overBudget = budget !== null && summary.warning > budget
-  const failed = summary.error > 0 || (strict && summary.warning > 0) || overBudget
+  const expectation = options.expectVersion === undefined || options.expectVersion === null
+    ? null
+    : {
+        expected: String(options.expectVersion),
+        actual: options.policyVersion ?? null,
+        match: String(options.expectVersion) === String(options.policyVersion ?? ''),
+      }
+  const failed = summary.error > 0 || (strict && summary.warning > 0) || overBudget || (expectation !== null && !expectation.match)
   return {
     tool: 'dsh-superagent-policy-validator',
     schemaVersion: 1,
@@ -57,6 +72,7 @@ export function buildReport(diagnostics, options = {}) {
       settings: options.settingsPath ?? null,
       deployment: options.deploymentPath ?? null,
     },
+    expectation,
     ok: !failed,
     summary,
     strict,
@@ -74,6 +90,7 @@ export function renderText(report) {
   const where = report.inputs.settings ? ` (${report.inputs.settings})` : ''
   lines.push(`dsh-superagent policy check${where}`)
   if (report.revision) lines.push(`policy revision: ${report.revision}${report.policyVersion ? `  version: ${report.policyVersion}` : ''}`)
+  else if (report.policyVersion) lines.push(`policy version: ${report.policyVersion}`)
   if (!report.diagnostics.length) {
     lines.push('OK — no findings.')
     return lines.join('\n')

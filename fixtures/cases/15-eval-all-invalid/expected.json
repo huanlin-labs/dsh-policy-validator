@@ -1,0 +1,31 @@
+{
+  "exitCode": 1,
+  "codes": [
+    "EVAL001",
+    "EVAL002",
+    "EVAL003",
+    "EVAL004"
+  ],
+  "diagnostics": [
+    {
+      "code": "EVAL001",
+      "severity": "error",
+      "path": "eval.mode"
+    },
+    {
+      "code": "EVAL003",
+      "severity": "error",
+      "path": "eval.model"
+    },
+    {
+      "code": "EVAL004",
+      "severity": "error",
+      "path": "eval.retries"
+    },
+    {
+      "code": "EVAL002",
+      "severity": "error",
+      "path": "eval.timeoutSeconds"
+    }
+  ]
+}

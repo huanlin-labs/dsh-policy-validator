@@ -1,0 +1,13 @@
+{
+  "exitCode": 0,
+  "codes": [
+    "SEM008"
+  ],
+  "diagnostics": [
+    {
+      "code": "SEM008",
+      "severity": "info",
+      "path": "policy.sources.github.allowed"
+    }
+  ]
+}

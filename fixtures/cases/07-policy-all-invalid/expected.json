@@ -7,5 +7,37 @@
     "POL005",
     "POL006",
     "POL007"
+  ],
+  "diagnostics": [
+    {
+      "code": "POL007",
+      "severity": "error",
+      "path": "policy.rules[0].enabled"
+    },
+    {
+      "code": "POL002",
+      "severity": "error",
+      "path": "policy.rules[0].extra"
+    },
+    {
+      "code": "POL003",
+      "severity": "error",
+      "path": "policy.rules[0].id"
+    },
+    {
+      "code": "POL006",
+      "severity": "error",
+      "path": "policy.rules[0].instruction"
+    },
+    {
+      "code": "POL005",
+      "severity": "error",
+      "path": "policy.rules[0].name"
+    },
+    {
+      "code": "POL004",
+      "severity": "error",
+      "path": "policy.rules[2].id"
+    }
   ]
 }
